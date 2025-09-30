@@ -1,19 +1,22 @@
 {
   "expo": {
-    "name": "broken-art-calc",
-    "slug": "broken-art-calc",
+    "name": "Fine Art Calc",
+    "slug": "fine-art-calc",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
+    "scheme": "fineartcalc",
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.fineartcalc.app",
+      "buildNumber": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {
@@ -21,10 +24,17 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.fineartcalc.app",
+      "versionCode": 1,
+      "minSdkVersion": 23
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "appStoreUrl": "https://apps.apple.com/app/idXXXXXXXXXX",
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.fineartcalc.app"
     }
   }
 }
