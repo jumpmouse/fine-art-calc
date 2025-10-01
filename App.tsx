@@ -108,15 +108,20 @@ export default function App() {
   }
 
   function formatMaxDecimals(s: string, maxDecimals: number): string {
-    if (s == null) return '';
-    const normalized = s.replace(',', '.');
-    // Keep only digits and one dot
-    const parts = normalized.split('.');
-    const head = parts[0].replace(/\D/g, '');
-    const tailRaw = parts.slice(1).join('');
-    const tail = tailRaw.replace(/\D/g, '').slice(0, Math.max(0, maxDecimals));
-    return tail.length > 0 ? `${head}.${tail}` : head;
+  if (s == null) return '';
+  const normalized = s.replace(',', '.');
+  // Keep only digits and one dot
+  const parts = normalized.split('.');
+  const head = parts[0].replace(/\D/g, '');
+  const tailRaw = parts.slice(1).join('');
+  const tail = tailRaw.replace(/\D/g, '').slice(0, Math.max(0, maxDecimals));
+  // If user typed a dot but hasn't entered decimal digits yet, preserve the trailing dot
+  const hasDot = normalized.includes('.');
+  if (hasDot && tail.length === 0 && head.length > 0 && maxDecimals > 0) {
+    return `${head}.`;
   }
+  return tail.length > 0 ? `${head}.${tail}` : head;
+}
 
   const results = useMemo<LayerResult[]>(() => {
     const W = Math.max(0, toNumber(imgWidthCm));
@@ -402,9 +407,9 @@ export default function App() {
               <Text style={styles.label}>{t('widthCm')}</Text>
               <TextInput
                 value={imgWidthCm}
-                onChangeText={setImgWidthCm}
+                onChangeText={(s) => setImgWidthCm(formatMaxDecimals(s, 1))}
                 inputMode="decimal"
-                keyboardType="numeric"
+                keyboardType={Platform.select({ ios: 'decimal-pad', android: 'numeric' })}
                 placeholder={t('egNumber', { n: 60 })}
                 placeholderTextColor={colors.placeholder}
                 onEndEditing={() => { setImgWidthCm(formatMaxDecimals(imgWidthCm, 1)); setWTouched(true); }}
@@ -416,9 +421,9 @@ export default function App() {
               <Text style={styles.label}>{t('heightCm')}</Text>
               <TextInput
                 value={imgHeightCm}
-                onChangeText={setImgHeightCm}
+                onChangeText={(s) => setImgHeightCm(formatMaxDecimals(s, 1))}
                 inputMode="decimal"
-                keyboardType="numeric"
+                keyboardType={Platform.select({ ios: 'decimal-pad', android: 'numeric' })}
                 placeholder={t('egNumber', { n: 80 })}
                 placeholderTextColor={colors.placeholder}
                 onEndEditing={() => { setImgHeightCm(formatMaxDecimals(imgHeightCm, 1)); setHTouched(true); }}
@@ -459,9 +464,9 @@ export default function App() {
                 <Text style={styles.label}>{t('widthCm')}</Text>
                 <TextInput
                   value={paspartuWidthCm}
-                  onChangeText={setPaspartuWidthCm}
+                  onChangeText={(s) => setPaspartuWidthCm(formatMaxDecimals(s, 1))}
                   inputMode="decimal"
-                  keyboardType="numeric"
+                  keyboardType={Platform.select({ ios: 'decimal-pad', android: 'numeric' })}
                   placeholder={t('egNumber', { n: 5 })}
                   placeholderTextColor={colors.placeholder}
                   onEndEditing={() => setPaspartuWidthCm(formatMaxDecimals(paspartuWidthCm, 1))}
@@ -473,9 +478,9 @@ export default function App() {
                 <Text style={styles.label}>{t('unitPrice')}</Text>
                 <TextInput
                   value={pricePaspartu}
-                  onChangeText={setPricePaspartu}
+                  onChangeText={(s) => setPricePaspartu(formatMaxDecimals(s, 2))}
                   inputMode="decimal"
-                  keyboardType="numeric"
+                  keyboardType={Platform.select({ ios: 'decimal-pad', android: 'numeric' })}
                   placeholder={t('egNumber', { n: 500 })}
                   placeholderTextColor={colors.placeholder}
                   onEndEditing={() => setPricePaspartu(formatMaxDecimals(pricePaspartu, 2))}
@@ -496,9 +501,9 @@ export default function App() {
               <Text style={styles.label}>{t('widthCm')}</Text>
               <TextInput
                 value={frame1WidthCm}
-                onChangeText={setFrame1WidthCm}
+                onChangeText={(s) => setFrame1WidthCm(formatMaxDecimals(s, 1))}
                 inputMode="decimal"
-                keyboardType="numeric"
+                keyboardType={Platform.select({ ios: 'decimal-pad', android: 'numeric' })}
                 placeholder={t('egNumber', { n: 3 })}
                 placeholderTextColor={colors.placeholder}
                 onEndEditing={() => setFrame1WidthCm(formatMaxDecimals(frame1WidthCm, 1))}
@@ -510,9 +515,9 @@ export default function App() {
               <Text style={styles.label}>{t('unitPrice')}</Text>
               <TextInput
                 value={priceFrame1}
-                onChangeText={setPriceFrame1}
+                onChangeText={(s) => setPriceFrame1(formatMaxDecimals(s, 2))}
                 inputMode="decimal"
-                keyboardType="numeric"
+                keyboardType={Platform.select({ ios: 'decimal-pad', android: 'numeric' })}
                 placeholder={t('egNumber', { n: 500 })}
                 placeholderTextColor={colors.placeholder}
                 onEndEditing={() => setPriceFrame1(formatMaxDecimals(priceFrame1, 2))}
@@ -547,9 +552,9 @@ export default function App() {
                 <Text style={styles.label}>{t('widthCm')}</Text>
                 <TextInput
                   value={frame2WidthCm}
-                  onChangeText={setFrame2WidthCm}
+                  onChangeText={(s) => setFrame2WidthCm(formatMaxDecimals(s, 1))}
                   inputMode="decimal"
-                  keyboardType="numeric"
+                  keyboardType={Platform.select({ ios: 'decimal-pad', android: 'numeric' })}
                   placeholder={t('egNumber', { n: 2 })}
                   placeholderTextColor={colors.placeholder}
                   onEndEditing={() => setFrame2WidthCm(formatMaxDecimals(frame2WidthCm, 1))}
@@ -561,9 +566,9 @@ export default function App() {
                 <Text style={styles.label}>{t('unitPrice')}</Text>
                 <TextInput
                   value={priceFrame2}
-                  onChangeText={setPriceFrame2}
+                  onChangeText={(s) => setPriceFrame2(formatMaxDecimals(s, 2))}
                   inputMode="decimal"
-                  keyboardType="numeric"
+                  keyboardType={Platform.select({ ios: 'decimal-pad', android: 'numeric' })}
                   placeholder={t('egNumber', { n: 500 })}
                   placeholderTextColor={colors.placeholder}
                   onEndEditing={() => setPriceFrame2(formatMaxDecimals(priceFrame2, 2))}
@@ -597,10 +602,10 @@ export default function App() {
                 <Text style={styles.label}>{t('wastePercentLabel')}</Text>
                 <TextInput
                   value={wastePercent}
-                  onChangeText={setWastePercent}
+                  onChangeText={(s) => setWastePercent(formatMaxDecimals(s, 1))}
                   onEndEditing={() => setWastePercent(formatPercentDisplay(wastePercent))}
                   inputMode="decimal"
-                  keyboardType="numeric"
+                  keyboardType={Platform.select({ ios: 'decimal-pad', android: 'numeric' })}
                   placeholder={t('egNumber', { n: 3 })}
                   placeholderTextColor={colors.placeholder}
                   editable={dimsReady}
@@ -864,6 +869,7 @@ const styles = StyleSheet.create({
     color: colors.muted,
   },
   input: {
+    fontSize: 16,
     height: 44,
     borderWidth: 1,
     borderColor: colors.borderStrong,
