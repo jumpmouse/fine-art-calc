@@ -88,7 +88,9 @@ export default function App() {
   const [wastePercent, setWastePercent] = useState<string>('3'); // 3.0–5.0
 
   const summaryRef = useRef<View>(null);
+  const scrollRef = useRef<any>(null);
   const [summarySize, setSummarySize] = useState<{ w: number; h: number }>({ w: 0, h: 0 });
+  const [showFooter, setShowFooter] = useState<boolean>(false);
 
   // Language (default Serbian)
   const [lang, setLangState] = useState<Lang>('sr');
@@ -269,6 +271,19 @@ export default function App() {
 
   const dimsReady = toNumber(imgWidthCm) > 0 && toNumber(imgHeightCm) > 0;
 
+  function revealFooter() {
+    try {
+      if (!showFooter) {
+        setShowFooter(true);
+        setTimeout(() => {
+          scrollRef.current?.scrollToEnd?.({ animated: true });
+        }, 0);
+      } else {
+        scrollRef.current?.scrollToEnd?.({ animated: true });
+      }
+    } catch {}
+  }
+
   async function exportAsImage() {
     try {
       const base64 = await captureRef(summaryRef, {
@@ -379,11 +394,13 @@ export default function App() {
     <SafeAreaView style={styles.safeArea}>
       <StatusBar style="dark" />
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={0} style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled" keyboardDismissMode={Platform.OS === 'ios' ? 'interactive' : 'on-drag'}>
+        <ScrollView ref={scrollRef} contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled" keyboardDismissMode={Platform.OS === 'ios' ? 'interactive' : 'on-drag'}>
           <View style={styles.pagePad}>
             <View style={styles.content}>
               <View style={styles.titleRow}>
-                <Text style={styles.title}>Fine Art Calc</Text>
+                <TouchableOpacity onPress={revealFooter} accessibilityRole="button" accessibilityLabel="Reveal footer">
+                  <Text style={styles.title}>Fine Art Calc</Text>
+                </TouchableOpacity>
                 <View style={styles.titleActions}>
                   <TouchableOpacity onPress={resetAll} style={styles.resetBtn} accessibilityLabel="Reset all inputs">
                     <Text style={styles.resetBtnIcon}>↺</Text>
@@ -674,18 +691,20 @@ export default function App() {
         </View>
         </View>
         </View>
-          <View style={[styles.footerBar]}> 
-            <View style={styles.footerInner}>
-              <Text style={styles.footerText}>Inspired by</Text>
-              <Image
-                source={require('./assets/inspiration.png')}
-                style={styles.footerLogo}
-                resizeMode="contain"
-                accessible
-                accessibilityLabel="Inspired by"
-              />
+          {showFooter ? (
+            <View style={[styles.footerBar]}> 
+              <View style={styles.footerInner}>
+                <Text style={styles.footerText}>Inspired by</Text>
+                <Image
+                  source={require('./assets/inspiration.png')}
+                  style={styles.footerLogo}
+                  resizeMode="contain"
+                  accessible
+                  accessibilityLabel="Inspired by"
+                />
+              </View>
             </View>
-          </View>
+          ) : null}
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -704,6 +723,7 @@ const styles = StyleSheet.create({
   },
   pagePad: {
     padding: 16,
+    flex: 1,
   },
   content: {
     width: '100%',
