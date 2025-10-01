@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   View,
   Switch,
+  Image,
 } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import Constants from 'expo-constants';
@@ -374,12 +375,13 @@ export default function App() {
       <StatusBar style="dark" />
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={0} style={{ flex: 1 }}>
         <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled" keyboardDismissMode={Platform.OS === 'ios' ? 'interactive' : 'on-drag'}>
-          <View style={styles.content}>
-          <View style={styles.titleRow}>
-            <Text style={styles.title}>Fine Art Calc</Text>
-            <View style={styles.titleActions}>
-              <TouchableOpacity onPress={resetAll} style={styles.resetBtn} accessibilityLabel="Reset all inputs">
-                <Text style={styles.resetBtnIcon}>↺</Text>
+          <View style={styles.pagePad}>
+            <View style={styles.content}>
+              <View style={styles.titleRow}>
+                <Text style={styles.title}>Fine Art Calc</Text>
+                <View style={styles.titleActions}>
+                  <TouchableOpacity onPress={resetAll} style={styles.resetBtn} accessibilityLabel="Reset all inputs">
+                    <Text style={styles.resetBtnIcon}>↺</Text>
               </TouchableOpacity>
               <View style={styles.langSelect}>
                 <TouchableOpacity onPress={() => switchLang('sr')} style={[styles.langBtn, lang === 'sr' && styles.langBtnActive]} accessibilityRole="button" accessibilityLabel="Serbian">
@@ -665,25 +667,20 @@ export default function App() {
           </View>
           <View style={{ height: 40 }} />
         </View>
-
-        {Platform.OS === 'web' && (storeLinks.appStore || storeLinks.playStore) ? (
-          <View style={[styles.footer, { marginTop: 28 }]}>
-            <Text style={styles.downloadTitle}>{t('getMobileApp')}</Text>
-            <View style={styles.downloadRow}>
-              {storeLinks.appStore ? (
-                <TouchableOpacity onPress={() => Linking.openURL(storeLinks.appStore!)} style={[styles.linkBtn, { backgroundColor: colors.primary }]}> 
-                  <Text style={styles.linkBtnText}>{t('iosAppStore')}</Text>
-                </TouchableOpacity>
-              ) : null}
-              {storeLinks.playStore ? (
-                <TouchableOpacity onPress={() => Linking.openURL(storeLinks.playStore!)} style={[styles.linkBtn, { backgroundColor: colors.success }]}> 
-                  <Text style={styles.linkBtnText}>{t('androidPlayStore')}</Text>
-                </TouchableOpacity>
-              ) : null}
+        </View>
+        </View>
+          <View style={[styles.footerBar]}> 
+            <View style={styles.footerInner}>
+              <Text style={styles.footerText}>Inspired by</Text>
+              <Image
+                source={{ uri: '/inspiration.png' }}
+                style={styles.footerLogo}
+                resizeMode="contain"
+                accessible
+                accessibilityLabel="Inspired by"
+              />
             </View>
           </View>
-        ) : null}
-        </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -697,6 +694,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.bg,
   },
   scroll: {
+    // No padding here; we pad the inner wrapper instead to keep footer full-width
+    padding: 0,
+  },
+  pagePad: {
     padding: 16,
   },
   content: {
@@ -1029,5 +1030,27 @@ const styles = StyleSheet.create({
   },
   btnDisabledOutline: {
     opacity: 0.5,
+  },
+  // New full-width footer bar (web only)
+  footerBar: {
+    backgroundColor: colors.primary,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    width: '100%',
+  },
+  footerInner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    gap: 8,
+  },
+  footerText: {
+    color: '#fff',
+    fontSize: 12,
+    opacity: 0.9,
+  },
+  footerLogo: {
+    height: 32,
+    width: 32,
   },
 });
