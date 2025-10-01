@@ -673,7 +673,7 @@ export default function App() {
             <View style={styles.footerInner}>
               <Text style={styles.footerText}>Inspired by</Text>
               <Image
-                source={{ uri: '/inspiration.png' }}
+                source={require('./assets/inspiration.png')}
                 style={styles.footerLogo}
                 resizeMode="contain"
                 accessible
