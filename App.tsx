@@ -273,13 +273,15 @@ export default function App() {
 
   function revealFooter() {
     try {
-      if (!showFooter) {
+      if (showFooter) {
+        // Hide footer on second tap
+        setShowFooter(false);
+      } else {
+        // Show and then scroll to reveal
         setShowFooter(true);
         setTimeout(() => {
           scrollRef.current?.scrollToEnd?.({ animated: true });
         }, 0);
-      } else {
-        scrollRef.current?.scrollToEnd?.({ animated: true });
       }
     } catch {}
   }
@@ -384,7 +386,6 @@ export default function App() {
     setPriceFrame2('');
     setWasteEnabled(false);
     setWastePercent('3');
-    setShowFooter(false);
   }
 
   const frame1Missing = toNumber(frame1WidthCm) <= 0;
