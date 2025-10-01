@@ -384,6 +384,7 @@ export default function App() {
     setPriceFrame2('');
     setWasteEnabled(false);
     setWastePercent('3');
+    setShowFooter(false);
   }
 
   const frame1Missing = toNumber(frame1WidthCm) <= 0;
@@ -1067,7 +1068,7 @@ const styles = StyleSheet.create({
   footerInner: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     gap: 8,
   },
   footerText: {
