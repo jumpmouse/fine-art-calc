@@ -13,6 +13,18 @@ npm run web
 # opens http://localhost:8081 (Expo dev server). Press `w` in the terminal to open the web build.
 ```
 
+### Web (PWA – production build & local verify)
+```bash
+# Build static PWA
+npm run build:web:pwa
+
+# Serve locally for testing (one option)
+npx serve -s dist
+```
+- Open the local URL in Chrome/Brave and check DevTools → Application:
+  - Manifest is present and lists icons.
+  - Service Worker `sw.js` is registered and activated.
+
 ## iOS (macOS only)
 - Install Xcode from the App Store.
 - Open Xcode > Settings > Locations: ensure Command Line Tools are installed.

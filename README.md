@@ -31,7 +31,6 @@ Note: export functions (image/PDF) exist in code but the buttons are temporarily
 # from project root
 npm install
 
-# Run on web
 npm run web
 
 # Run on Android (emulator must be running or device connected)
@@ -40,6 +39,20 @@ npm run android
 # Run on iOS (Xcode + Simulator)
 npm run ios
 ```
+
+### Production Web (PWA)
+```bash
+# Build static PWA
+npm run build:web:pwa
+
+# Serve locally for testing (one option)
+npx serve -s dist
+```
+- Vercel settings:
+  - Framework: Other
+  - Build Command: `npm run build:web:pwa`
+  - Output Directory: `dist`
+  - See `docs/PWA_SETUP.md` for full details.
 
 ## Using the App
 - **Enter** painting width and height in cm (then Layers and Summary become active).
@@ -68,6 +81,14 @@ npm run ios
 ```
 - The banner with links appears on Web only, hidden on mobile.
 
+## Android APK (sideload distribution)
+- Build a sideloadable APK:
+```bash
+npx eas-cli build -p android --profile apk
+```
+- Host the `.apk` at an HTTPS URL and share with recipients.
+- See `docs/ANDROID_APK_DISTRIBUTION.md` and `docs/PHONE_INSTALL_NO_STORE.md`.
+
 ## OS Compatibility
 - Android: minSdkVersion 23 (Android 6.0+)
 - iOS: determined by Expo SDK and Apple policy (typically iOS 13+ with current SDKs). No custom plugin forcing higher targets.
@@ -82,11 +103,15 @@ fine-art-calc/
   App.tsx                # main UI + calculation + export
   app.json               # Expo config, ids, icons, store links
   assets/                # icons/splash
+  public/                # web PWA: manifest, index.html, icons
   eas.json               # EAS build profiles
   docs/
     PLAN.md              # architecture and implementation plan
+    PWA_SETUP.md         # PWA config, icons, SW, Vercel
     PUBLISHING.md        # step-by-step publishing guide
+    ANDROID_APK_DISTRIBUTION.md # EAS APK build + hosting
     STORE_ASSETS.md      # assets checklist/specs
+    PHONE_INSTALL_NO_STORE.md   # end-user install without stores
   package.json
   tsconfig.json
 ```

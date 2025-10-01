@@ -6,7 +6,7 @@ This guide helps you install Fine Art Calc without using the Google Play Store o
 - For Android: you can install a Web App (Add to Home screen) or directly install an APK file provided by the sender.
 
 If your sender shared links, keep them handy:
-- Web App URL: https://YOUR-WEB-URL.example (replace by actual link the sender gave you)
+- Web App URL: https://fine-art-calc.vercel.app
 - Android APK URL: https://YOUR-DIRECT-APK-LINK.example/fine-art-calc.apk
 
 Only install from sources you trust.
@@ -19,7 +19,7 @@ Only install from sources you trust.
 This places an app icon on your Home Screen that opens the app in full screen. No Apple ID or fees.
 
 1) Open Safari on your iPhone.
-2) Visit the Web App link: `https://YOUR-WEB-URL.example` (use the link you received).
+2) Visit the Web App link: `https://fine-art-calc.vercel.app`.
 3) Tap the Share button (square with an up arrow).
 4) Scroll down and tap "Add to Home Screen".
 5) Optionally rename the app, then tap "Add".
@@ -49,7 +49,7 @@ Important:
 
 ### Option A — Install the Web App (Add to Home screen)
 1) Open Chrome (or your browser) on your phone.
-2) Visit the Web App link: `https://YOUR-WEB-URL.example`.
+2) Visit the Web App link: `https://fine-art-calc.vercel.app`.
 3) Open the browser menu (⋮ in Chrome) and tap "Add to Home screen".
 4) Confirm to add the icon. Launch from your Home Screen.
 

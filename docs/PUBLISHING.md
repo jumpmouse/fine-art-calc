@@ -55,16 +55,20 @@ This guide walks you through preparing, building, and submitting Fine Art Calc t
    - Track: internal testing → closed testing → production.
    - Provide screenshots, feature graphic, descriptions.
 
-## 4) Web – Build & Deploy
-- Build static site:
+## 4) Web – Build & Deploy (PWA)
+- Build static PWA:
   ```bash
-  npx expo export --platform web
+  npm run build:web:pwa
   ```
   - Output in `dist/`.
-- Deploy options:
-  - Netlify: drag-and-drop `dist/` or connect repo; set publish dir to `fine-art-calc/dist`.
+- Vercel settings:
+  - Framework: Other
+  - Build Command: `npm run build:web:pwa`
+  - Output Directory: `dist`
+- Alternative hosting (if not using Vercel):
+  - Netlify: drag-and-drop `dist/` or connect repo; publish dir = `fine-art-calc/dist`.
   - GitHub Pages: host the contents of `dist/` on a branch (e.g., `gh-pages`).
-  - Vercel: import repo; set output dir to `fine-art-calc/dist`.
+- The site is PWA-installable after deploy: Chrome/Brave show Install UI; iPhone Safari uses Share → Add to Home Screen.
 - The web build shows "Get the mobile app" links when `app.json > expo.extra` URLs are set.
 
 ## 5) Assets & Metadata

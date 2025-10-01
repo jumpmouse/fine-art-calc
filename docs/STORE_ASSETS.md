@@ -15,6 +15,23 @@ Prepare these before submitting to stores.
 - **In-app icon**: Provided via `assets/icon.png`
 - **Splash**: Single SVG/PNG is fine; keep contrast high, light background
 
+### Web PWA Icons (site install)
+Place these files for the PWA in the `public/` directory:
+
+```
+public/
+  icons/
+    icon-192.png              # 192×192 PNG (purpose: any)
+    icon-512.png              # 512×512 PNG (purpose: any)
+    icon-192-maskable.png     # 192×192 PNG (purpose: maskable)
+    icon-512-maskable.png     # 512×512 PNG (purpose: maskable)
+  apple-touch-icon.png        # 180×180 PNG for iOS Add to Home Screen
+```
+
+- Keep critical artwork within a safe area (maskable icons are cropped by various shapes).
+- Colors used by the manifest: `theme_color` and `background_color` (see `public/manifest.json`).
+- Favicon: `app.json > web.favicon` points to `./assets/favicon.png`, which Expo converts to `/favicon.ico` on export. You can override by adding `public/favicon.ico`.
+
 ## iOS Screenshots (App Store)
 - Provide for the largest device size at minimum; Apple can scale down.
 - Recommended sets:
