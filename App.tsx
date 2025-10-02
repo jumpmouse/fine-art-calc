@@ -21,6 +21,7 @@ import * as Sharing from 'expo-sharing';
 import * as Print from 'expo-print';
 import { captureRef } from 'react-native-view-shot';
 import { t, setLang, type Lang } from './i18n';
+import { Analytics } from '@vercel/analytics/react';
 
 type LayerResult = {
   key: 'paspartu' | 'frame1' | 'frame2';
@@ -710,6 +711,7 @@ export default function App() {
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
+    {Platform.OS === 'web' ? <Analytics /> : null}
     </SafeAreaProvider>
   );
 }
